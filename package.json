@@ -15,5 +15,9 @@
   "bugs": {
     "url": "https://github.com/gjlacerda/redux-study/issues"
   },
-  "homepage": "https://github.com/gjlacerda/redux-study#readme"
+  "homepage": "https://github.com/gjlacerda/redux-study#readme",
+  "devDependencies": {
+    "deep-freeze": "0.0.1",
+    "expect": "^1.20.2"
+  }
 }
