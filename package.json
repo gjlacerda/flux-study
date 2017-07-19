@@ -1,0 +1,19 @@
+{
+  "name": "redux-study",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gjlacerda/redux-study.git"
+  },
+  "author": "Guilherme Lacerda",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gjlacerda/redux-study/issues"
+  },
+  "homepage": "https://github.com/gjlacerda/redux-study#readme"
+}
