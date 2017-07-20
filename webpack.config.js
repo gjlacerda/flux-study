@@ -1,5 +1,5 @@
-const path              = require('path');
-const webpack           = require('webpack');
+const path    = require('path');
+const webpack = require('webpack');
 
 module.exports = {
     devtool: 'inline-source-map',
@@ -10,7 +10,7 @@ module.exports = {
     ],
     output: {
         path: path.resolve('dist'),
-        filename: 'bundlee.js',
+        filename: 'bundle.js',
     },
     module: {
         loaders: [
@@ -31,6 +31,11 @@ module.exports = {
             'src',
             'node_modules'
         ]
+    },
+    devServer: {
+        publicPath: '/',
+        contentBase: './dist',
+        historyApiFallback: true
     },
     plugins: [
         new webpack.HotModuleReplacementPlugin(),
