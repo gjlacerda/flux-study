@@ -13,8 +13,9 @@ const todo = (state, action) => {
             };
         case 'TOGGLE_TODO':
             if (state.id === action.id) {
+                
                 return Object.assign({}, state, {
-                    completed: !action.completed
+                    completed: !state.completed
                 });
             }
 
