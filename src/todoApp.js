@@ -10,12 +10,13 @@ export default class TodoApp extends React.Component {
         return (
             <div>
                 <input type="text" ref={node => this.input = node}/>
-                <button onClick={this.handleClick.bind(this)}>
+                <button onClick={this.addTodo.bind(this)}>
                     Add Todo
                 </button>
                 <ul>
                     {this.props.todos.map(todo =>
-                        <li key={todo.id}>
+                        <li key={todo.id} onClick={this.toggleTodo.bind(this, todo)}
+                            style={{textDecoration: todo.completed ? 'line-through' : 'none'}}>
                             {todo.text}
                         </li>
                     )}
@@ -24,7 +25,7 @@ export default class TodoApp extends React.Component {
         );
     }
 
-    handleClick() {
+    addTodo() {
 
         store.dispatch({
             type: 'ADD_TODO',
@@ -33,5 +34,13 @@ export default class TodoApp extends React.Component {
         });
 
         this.input.value = '';
+    }
+
+    toggleTodo(todo) {
+
+        store.dispatch({
+            type: 'TOGGLE_TODO',
+            id: todo.id
+        });
     }
 }
