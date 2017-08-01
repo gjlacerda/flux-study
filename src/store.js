@@ -13,7 +13,6 @@ const todo = (state, action) => {
             };
         case 'TOGGLE_TODO':
             if (state.id === action.id) {
-                
                 return Object.assign({}, state, {
                     completed: !state.completed
                 });
@@ -30,6 +29,11 @@ const todos = (state = [], action) => {
 
     switch (action.type) {
         case 'ADD_TODO':
+
+            if (!action.text) {
+                return state;
+            }
+
             return [
                 ...state,
                 todo(undefined, action)
