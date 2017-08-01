@@ -3,6 +3,19 @@ import store from 'store';
 
 let nextTodoId = 0;
 
+const getVisibleTodos = (todos, filter) => {
+
+    switch (filter) {
+        case 'SHOW_ALL':
+            return todos;
+        case 'SHOW_COMPLETED':
+            return todos.filter(t => t.completed);
+        case 'SHOW_ACTIVE':
+            return todos.filter(t => !t.completed);
+    }
+
+};
+
 const FilterLink = ({filter, currentFilter, children}) => {
 
     if (filter === currentFilter) {
@@ -22,18 +35,20 @@ const FilterLink = ({filter, currentFilter, children}) => {
     );
 };
 
-const getVisibleTodos = (todos, filter) => {
+const Todo = ({onClick, completed, text}) => (
+    <li onClick={onClick}
+        style={{textDecoration: completed ? 'line-through' : 'none'}}>
+        {text}
+    </li>
+);
 
-    switch (filter) {
-        case 'SHOW_ALL':
-            return todos;
-        case 'SHOW_COMPLETED':
-            return todos.filter(t => t.completed);
-        case 'SHOW_ACTIVE':
-            return todos.filter(t => !t.completed);
-    }
-
-};
+const TodoList = ({todos, onTodoClick}) => (
+    <ul>
+        {todos.map(todo =>
+            <Todo key={todo.id} {...todo} onClick={() => onTodoClick(todo.id)}/>
+        )}
+    </ul>
+);
 
 export default class TodoApp extends React.Component {
 
@@ -52,14 +67,7 @@ export default class TodoApp extends React.Component {
                 <button onClick={this.addTodo.bind(this)}>
                     Add Todo
                 </button>
-                <ul>
-                    {visibleTodos.map(todo =>
-                        <li key={todo.id} onClick={this.toggleTodo.bind(this, todo)}
-                            style={{textDecoration: todo.completed ? 'line-through' : 'none'}}>
-                            {todo.text}
-                        </li>
-                    )}
-                </ul>
+                <TodoList todos={visibleTodos} onTodoClick={id => this.toggleTodo(id)}/>
                 <p>
                     Show:&nbsp;
                     <FilterLink filter='SHOW_ALL' currentFilter={visibilityFilter}>All</FilterLink>&nbsp;
@@ -81,11 +89,11 @@ export default class TodoApp extends React.Component {
         this.input.value = '';
     }
 
-    toggleTodo(todo) {
-
+    toggleTodo(id) {
+        
         store.dispatch({
             type: 'TOGGLE_TODO',
-            id: todo.id
+            id: id
         });
     }
 }
