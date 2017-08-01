@@ -3,19 +3,6 @@ import store from 'store';
 
 let nextTodoId = 0;
 
-const getVisibleTodos = (todos, filter) => {
-
-    switch (filter) {
-        case 'SHOW_ALL':
-            return todos;
-        case 'SHOW_COMPLETED':
-            return todos.filter(t => t.completed);
-        case 'SHOW_ACTIVE':
-            return todos.filter(t => !t.completed);
-    }
-
-};
-
 const FilterLink = ({filter, currentFilter, children}) => {
 
     if (filter === currentFilter) {
@@ -56,7 +43,7 @@ export default class TodoApp extends React.Component {
 
         const {todos, visibilityFilter} = this.props;
 
-        const visibleTodos = getVisibleTodos(
+        const visibleTodos = this.getVisibleTodos(
             todos,
             visibilityFilter
         );
@@ -90,10 +77,22 @@ export default class TodoApp extends React.Component {
     }
 
     toggleTodo(id) {
-        
+
         store.dispatch({
             type: 'TOGGLE_TODO',
             id: id
         });
+    }
+
+    getVisibleTodos(todos, filter) {
+
+        switch (filter) {
+            case 'SHOW_ALL':
+                return todos;
+            case 'SHOW_COMPLETED':
+                return todos.filter(t => t.completed);
+            case 'SHOW_ACTIVE':
+                return todos.filter(t => !t.completed);
+        }
     }
 }
