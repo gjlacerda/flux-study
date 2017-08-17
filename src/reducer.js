@@ -1,4 +1,4 @@
-import {createStore, combineReducers} from 'redux';
+import {combineReducers} from 'redux';
 import deepFreeze from 'deep-freeze';
 import expect from 'expect';
 
@@ -127,7 +127,7 @@ const visibilityFilter = (state = 'SHOW_ALL', action) => {
 //};
 
 // Dá no mesmo que o código comentado a cima
-const todoApp = combineReducers({
+const reducer = combineReducers({
     todos,
     visibilityFilter
 });
@@ -137,6 +137,4 @@ testToggleTodo();
 
 console.log('All tests passed.');
 
-const store = createStore(todoApp);
-
-export default store;
+export default reducer;

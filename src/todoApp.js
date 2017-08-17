@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import store from 'store';
 
 let nextTodoId = 0;
 
@@ -34,6 +33,9 @@ const Link = ({active, children, onClick}) => {
 class FilterLink extends Component {
 
     componentDidMount() {
+
+        const {store} = this.props;
+
         this.unsubscribe = store.subscribe(() => {
             this.forceUpdate();
         });
@@ -45,8 +47,9 @@ class FilterLink extends Component {
 
     render() {
 
-        const props = this.props;
-        const state = store.getState();
+        const props   = this.props;
+        const {store} = props;
+        const state   = store.getState();
 
         return (
             <Link active={props.filter === state.visibilityFilter}
@@ -77,7 +80,7 @@ const TodoList = ({todos, onTodoClick}) => (
     </ul>
 );
 
-const AddTodo = () => {
+const AddTodo = ({store}) => {
 
     let input;
 
@@ -98,18 +101,21 @@ const AddTodo = () => {
     );
 };
 
-const Footer = () => (
+const Footer = ({store}) => (
     <p>
         Show:&nbsp;
-        <FilterLink filter='SHOW_ALL'>All</FilterLink>&nbsp;
-        <FilterLink filter='SHOW_ACTIVE'>Active</FilterLink>&nbsp;
-        <FilterLink filter='SHOW_COMPLETED'>Completed</FilterLink>
+        <FilterLink filter='SHOW_ALL' store={store}>All</FilterLink>&nbsp;
+        <FilterLink filter='SHOW_ACTIVE' store={store}>Active</FilterLink>&nbsp;
+        <FilterLink filter='SHOW_COMPLETED' store={store}>Completed</FilterLink>
     </p>
 );
 
 class VisibleTodoList extends Component {
 
     componentDidMount() {
+
+        const {store} = this.props;
+
         this.unsubscribe = store.subscribe(() => {
             this.forceUpdate();
         });
@@ -121,7 +127,9 @@ class VisibleTodoList extends Component {
 
     render() {
 
-        const state = store.getState();
+        const props   = this.props;
+        const {store} = props;
+        const state   = store.getState();
 
         return (
             <TodoList
@@ -141,11 +149,11 @@ class VisibleTodoList extends Component {
     }
 }
 
-const TodoApp = () => (
+const TodoApp = ({store}) => (
     <div>
-        <AddTodo/>
-        <VisibleTodoList/>
-        <Footer/>
+        <AddTodo store={store}/>
+        <VisibleTodoList store={store}/>
+        <Footer store={store}/>
     </div>
 );
 
